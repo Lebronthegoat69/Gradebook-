@@ -1,0 +1,64 @@
+﻿using System;
+using GradebookApp;
+
+class Program
+{
+    static void Main()
+    {
+        var book = new Gradebook();
+        bool running = true;
+
+        while (running)
+        {
+            Console.WriteLine("\nGRADEBOOK MENU");
+            Console.WriteLine("1. Add grade");
+            Console.WriteLine("2. View summary");
+            Console.WriteLine("3. Clear grades");
+            Console.WriteLine("4. Exit");
+            Console.Write("Choose an option: ");
+
+            switch (Console.ReadLine())
+            {
+                case "1":
+                    Console.Write("Enter grade (0–100): ");
+                    if (double.TryParse(Console.ReadLine(), out double grade))
+                    {
+                        try
+                        {
+                            book.AddGrade(grade);
+                            Console.WriteLine("Grade added.");
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex.Message);
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid input.");
+                    }
+                    break;
+
+                case "2":
+                    Console.WriteLine($"Count: {book.GetCount()}");
+                    Console.WriteLine($"Average: {book.GetAverage():F2}");
+                    Console.WriteLine($"Highest: {book.GetHighest()}");
+                    Console.WriteLine($"Lowest: {book.GetLowest()}");
+                    break;
+
+                case "3":
+                    book.Clear();
+                    Console.WriteLine("Grades cleared.");
+                    break;
+
+                case "4":
+                    running = false;
+                    break;
+
+                default:
+                    Console.WriteLine("Invalid option.");
+                    break;
+            }
+        }
+    }
+}
